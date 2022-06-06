@@ -29,7 +29,7 @@ const Empty = () => (
 );
 
 export const SmartContractList = (props: any) => (
-    <List {...props} filters={postFilters} empty={<Empty/>} exporter={false}>
+    <List {...props} filters={postFilters} empty={<Empty/>} exporter={false} hasCreate={true}>
         <Datagrid rowClick="show">
             <WrapperField label="name_author">
                 <TextField source="name"/> <br/>
