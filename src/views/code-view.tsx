@@ -3,7 +3,6 @@ import {nord} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {Octokit} from 'octokit';
 import React from "react";
 import {RestEndpointMethodTypes} from "@octokit/rest";
-import {useRecordContext} from "react-admin";
 
 const getCodeFromGithub = async (source: any) => {
     const sourceForAPI = prepareURLForCode(source);
@@ -37,11 +36,9 @@ const prepareURLForCode = (source: any) => {
 };
 
 const CodeView = ({source}: { source: any }) => {
-    const record = useRecordContext();
-    const currentElement = record[source][0];
     const [code, setCode] = React.useState("");
     React.useEffect(() => {
-        getCodeFromGithub(currentElement).then(
+        getCodeFromGithub(source).then(
             result => {
                 setCode(result.toString())
             }
@@ -49,7 +46,7 @@ const CodeView = ({source}: { source: any }) => {
     })
 
     return (
-        <SyntaxHighlighter language={currentElement.language} style={nord} showLineNumbers={true}>
+        <SyntaxHighlighter language={source.language} style={nord} showLineNumbers={true}>
             {code}
         </SyntaxHighlighter>
     );

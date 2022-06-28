@@ -91,4 +91,9 @@ export const dataProvider = {
             body: JSON.stringify(params.data),
         }).then(({json}) => ({data: json}));
     },
+    installCC: (resource: any, params: any) =>
+        httpClient(`${apiUrl}/${resource}/${params.id}`, {
+            method: 'POST',
+            body: JSON.stringify(params.data),
+        }).then(({json}) => ({data: json})),
 };
