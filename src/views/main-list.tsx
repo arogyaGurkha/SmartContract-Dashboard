@@ -18,7 +18,7 @@ import DiffDialogView from "./diff-dialog-view";
 import DropdownMenu from "./dropdown-menu";
 
 const postFilters = [
-    <SearchInput source="q" alwaysOn/>,
+    // <SearchInput source="q" alwaysOn/>,
     <TextInput label="Title" source="title" defaultValue="Hello, World!"/>,
 ];
 

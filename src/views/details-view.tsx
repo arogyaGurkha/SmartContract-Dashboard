@@ -15,6 +15,8 @@ import {Grid, Stack, Button, Divider} from '@mui/material'
 import React, {useState} from "react";
 import FileSaver from "file-saver";
 import DropdownMenu from "./dropdown-menu";
+import TransactionDialogView from "./transaction-dialog-view";
+import {json} from "stream/consumers";
 
 const DetailsView = (props: any) => {
 
@@ -81,6 +83,7 @@ const DetailsView = (props: any) => {
                         <Button variant={"contained"}
                                 onClick={() => installSC(record)}>Install
                             Smart Contract</Button>
+                        {/*<TransactionDialogButton/>*/}
                     </SimpleShowLayout>
                 </Grid>
             </Grid>
@@ -127,5 +130,41 @@ const installSC = (source: any) => {
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
 };
+
+const TransactionDialogButton = () => {
+    const [dialogIsOpen, setDialogIsOpen] = useState(false);
+    const openDialog = () => {setDialogIsOpen(true);}
+    const closeDialog = () => setDialogIsOpen(false);
+    const jsonSrc = {
+        "fabric-contract-api": "^2.0.0",
+        "fabric-shim": "^2.0.0",
+        "json-stringify-deterministic": "^1.0.1",
+        "sort-keys-recursive": "^2.1.2"
+    }
+
+    const value = fetchAssets()
+
+    return (
+        <div>
+            <Button variant={"contained"} onClick={openDialog}>Use SC for Transaction</Button>
+            <TransactionDialogView open={dialogIsOpen}
+                                   onClose={closeDialog}
+                                   jsonSrc={jsonSrc}/>
+        </div>
+    )
+};
+
+const fetchAssets = () => {
+    var requestOptions: RequestInit = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    let data = fetch("http://localhost:8080/fabric/dashboard/smart-contracts/asset", requestOptions)
+        .then(response => response.text())
+        .then(result =>{ return result})
+        .catch(error => console.log('error', error));
+    console.log(data)
+}
 
 export default DetailsView;
